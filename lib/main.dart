@@ -39,21 +39,14 @@ class RpgDiceApp extends StatelessWidget {
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: const Color(0xFF151A24),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(
-              color: Color(0xFF303847),
-            ),
+            borderSide: const BorderSide(color: Color(0xFF303847)),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(
-              color: Color(0xFF42A5F5),
-              width: 2,
-            ),
+            borderSide: const BorderSide(color: Color(0xFF42A5F5), width: 2),
           ),
         ),
 
@@ -134,12 +127,14 @@ class _DiceHomePageState extends State<DiceHomePage> {
   final Random _random = Random();
 
   /// Controla o campo de quantidade de dados.
-  final TextEditingController _quantityController =
-      TextEditingController(text: '1');
+  final TextEditingController _quantityController = TextEditingController(
+    text: '1',
+  );
 
   /// Controla o campo de modificador.
-  final TextEditingController _modifierController =
-      TextEditingController(text: '0');
+  final TextEditingController _modifierController = TextEditingController(
+    text: '0',
+  );
 
   /// Dados disponíveis para escolha.
   final List<int> _diceSides = [4, 6, 8, 10, 12, 20, 100];
@@ -200,9 +195,7 @@ class _DiceHomePageState extends State<DiceHomePage> {
       // Converte cada item para DiceRoll.
       final loadedRolls = decodedHistory
           .map(
-            (item) => DiceRoll.fromMap(
-              Map<String, dynamic>.from(item as Map),
-            ),
+            (item) => DiceRoll.fromMap(Map<String, dynamic>.from(item as Map)),
           )
           .toList();
 
@@ -241,21 +234,16 @@ class _DiceHomePageState extends State<DiceHomePage> {
     final encodedHistory = jsonEncode(historyAsMap);
 
     // Salva no navegador usando uma chave.
-    await preferences.setString(
-      'dice_history',
-      encodedHistory,
-    );
+    await preferences.setString('dice_history', encodedHistory);
   }
 
   /// Realiza uma nova rolagem.
   Future<void> _rollDice() async {
     // Tenta converter a quantidade digitada para inteiro.
-    final quantity =
-        int.tryParse(_quantityController.text.trim()) ?? 1;
+    final quantity = int.tryParse(_quantityController.text.trim()) ?? 1;
 
     // Tenta converter o modificador digitado para inteiro.
-    final modifier =
-        int.tryParse(_modifierController.text.trim()) ?? 0;
+    final modifier = int.tryParse(_modifierController.text.trim()) ?? 0;
 
     // Garante que a quantidade fique entre 1 e 20.
     //
@@ -263,22 +251,16 @@ class _DiceHomePageState extends State<DiceHomePage> {
     final safeQuantity = quantity.clamp(1, 20).toInt();
 
     // Cria os resultados aleatórios.
-    final results = List<int>.generate(
-      safeQuantity,
-      (index) {
-        // nextInt(_selectedSides) gera de 0 até sides - 1.
-        // Somando 1, o resultado fica de 1 até sides.
-        return _random.nextInt(_selectedSides) + 1;
-      },
-    );
+    final results = List<int>.generate(safeQuantity, (index) {
+      // nextInt(_selectedSides) gera de 0 até sides - 1.
+      // Somando 1, o resultado fica de 1 até sides.
+      return _random.nextInt(_selectedSides) + 1;
+    });
 
     // Soma os resultados individuais.
-    final diceTotal = results.fold<int>(
-      0,
-      (currentTotal, value) {
-        return currentTotal + value;
-      },
-    );
+    final diceTotal = results.fold<int>(0, (currentTotal, value) {
+      return currentTotal + value;
+    });
 
     // Adiciona o modificador.
     final total = diceTotal + modifier;
@@ -329,9 +311,7 @@ class _DiceHomePageState extends State<DiceHomePage> {
       builder: (context) {
         return AlertDialog(
           title: const Text('Limpar histórico?'),
-          content: const Text(
-            'Todas as rolagens salvas serão removidas.',
-          ),
+          content: const Text('Todas as rolagens salvas serão removidas.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -395,17 +375,10 @@ class _DiceHomePageState extends State<DiceHomePage> {
         ],
       ),
       body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? const Center(child: CircularProgressIndicator())
           : SafeArea(
               child: ListView(
-                padding: const EdgeInsets.fromLTRB(
-                  16,
-                  8,
-                  16,
-                  24,
-                ),
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                 children: [
                   _buildResultCard(),
                   const SizedBox(height: 18),
@@ -426,10 +399,7 @@ class _DiceHomePageState extends State<DiceHomePage> {
         padding: const EdgeInsets.all(24),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF56151B),
-              Color(0xFF123458),
-            ],
+            colors: [Color(0xFF56151B), Color(0xFF123458)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -439,27 +409,19 @@ class _DiceHomePageState extends State<DiceHomePage> {
           children: [
             Text(
               'Resultado',
-              style: TextStyle(
-                color: Colors.grey.shade300,
-                fontSize: 16,
-              ),
+              style: TextStyle(color: Colors.grey.shade300, fontSize: 16),
             ),
             const SizedBox(height: 6),
             Text(
               '$_total',
-              style: const TextStyle(
-                fontSize: 58,
-                fontWeight: FontWeight.w800,
-              ),
+              style: const TextStyle(fontSize: 58, fontWeight: FontWeight.w800),
             ),
             const SizedBox(height: 8),
             Text(
               _currentResults.isEmpty
                   ? 'Configure e role os dados'
                   : 'Resultados: ${_currentResults.join(' • ')}',
-              style: TextStyle(
-                color: Colors.grey.shade300,
-              ),
+              style: TextStyle(color: Colors.grey.shade300),
             ),
           ],
         ),
@@ -477,37 +439,27 @@ class _DiceHomePageState extends State<DiceHomePage> {
           children: [
             const Text(
               'Configurar rolagem',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-            Text(
-              'Tipo de dado',
-              style: TextStyle(
-                color: Colors.grey.shade400,
-              ),
-            ),
+            Text('Tipo de dado', style: TextStyle(color: Colors.grey.shade400)),
             const SizedBox(height: 10),
 
             // Botões d4, d6, d8, d10, d12, d20 e d100.
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: _diceSides.map(
-                (side) {
-                  return ChoiceChip(
-                    label: Text('d$side'),
-                    selected: _selectedSides == side,
-                    onSelected: (selected) {
-                      setState(() {
-                        _selectedSides = side;
-                      });
-                    },
-                  );
-                },
-              ).toList(),
+              children: _diceSides.map((side) {
+                return ChoiceChip(
+                  label: Text('d$side'),
+                  selected: _selectedSides == side,
+                  onSelected: (selected) {
+                    setState(() {
+                      _selectedSides = side;
+                    });
+                  },
+                );
+              }).toList(),
             ),
 
             const SizedBox(height: 18),
@@ -571,16 +523,11 @@ class _DiceHomePageState extends State<DiceHomePage> {
           children: [
             const Text(
               'Histórico local',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             Text(
               '${_history.length} rolagem(ns)',
-              style: TextStyle(
-                color: Colors.grey.shade500,
-              ),
+              style: TextStyle(color: Colors.grey.shade500),
             ),
           ],
         ),
@@ -590,49 +537,33 @@ class _DiceHomePageState extends State<DiceHomePage> {
           const Card(
             child: Padding(
               padding: EdgeInsets.all(22),
-              child: Center(
-                child: Text(
-                  'Nenhuma rolagem salva ainda.',
-                ),
-              ),
+              child: Center(child: Text('Nenhuma rolagem salva ainda.')),
             ),
           )
         else
-          ..._history.asMap().entries.map(
-            (entry) {
-              final index = entry.key;
-              final roll = entry.value;
+          ..._history.asMap().entries.map((entry) {
+            final index = entry.key;
+            final roll = entry.value;
 
-              return _buildHistoryItem(
-                roll: roll,
-                index: index,
-              );
-            },
-          ),
+            return _buildHistoryItem(roll: roll, index: index);
+          }),
       ],
     );
   }
 
   /// Cria um item do histórico.
-  Widget _buildHistoryItem({
-    required DiceRoll roll,
-    required int index,
-  }) {
+  Widget _buildHistoryItem({required DiceRoll roll, required int index}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Card(
         child: ListTile(
           leading: CircleAvatar(
-            backgroundColor: Theme.of(context)
-                .colorScheme
-                .primaryContainer,
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
             child: const Icon(Icons.casino_rounded),
           ),
           title: Text(
             roll.notation,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           subtitle: Text(
             '${roll.results.join(', ')} • '
