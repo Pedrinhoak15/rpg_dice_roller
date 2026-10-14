@@ -6,10 +6,9 @@ O aplicativo permite escolher diferentes tipos de dados, realizar rolagens, adic
 
 ## Integrantes
 
-- Pedro Silva — desenvolvimento do aplicativo
-- Nome do segundo integrante — interface e design
-- Nome do terceiro integrante — testes e documentação
-
+- Pedro Lucas Matos Silva 
+- José Mario P. Junior  
+- Alice Santana da Silva
 ## Funcionalidades
 
 - Rolagem de dados d4, d6, d8, d10, d12, d20 e d100
