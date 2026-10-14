@@ -1,0 +1,23 @@
+# Arquivos do Flutter e Dart
+.dart_tool/
+.packages
+.pub/
+.pub-cache/
+build/
+
+# Arquivos gerados pelo Flutter
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+
+# Configurações de IDE
+.idea/
+*.iml
+.vscode/
+
+# Arquivos do Windows
+Thumbs.db
+Desktop.ini
+
+# Arquivos sensíveis
+.env
